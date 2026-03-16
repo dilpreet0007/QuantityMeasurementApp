@@ -51,14 +51,19 @@ h1, h2 {
   transition: transform 0.2s ease;
 }
 
-.card.active {
-  border-color: var(--primary);
+.card:hover {
+  background-color: rgb(174, 174, 234);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px gray;
+  transition: transform 0.2s ease;
 }
 
-.icon img {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 0.5rem;
+.card.active {
+  border-color: var(--primary);
 }
 
 .tabs {
@@ -74,6 +79,7 @@ h1, h2 {
   background: var(--border);
   cursor: pointer;
 }
+
 
 .btn.active {
   background: var(--primary);
@@ -145,6 +151,20 @@ input {
   border: none;
   border-radius: 6px;
   background: rgb(210, 119, 119);
+  cursor: pointer;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 10px;
+}
+.btn-reset:hover{
+  font-size: larger;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: rgb(210, 119, 119);
+  box-shadow: 2px 2px 5px grey;
   cursor: pointer;
   position: absolute;
   top: 70%;
