@@ -1,0 +1,813 @@
+{
+    "units":  [
+                  {
+                      "id":  1,
+                      "type":  "length",
+                      "label":  "meter",
+                      "symbol":  "m"
+                  },
+                  {
+                      "id":  2,
+                      "type":  "length",
+                      "label":  "centimeter",
+                      "symbol":  "cm"
+                  },
+                  {
+                      "id":  3,
+                      "type":  "length",
+                      "label":  "milimeter",
+                      "symbol":  "mm"
+                  },
+                  {
+                      "id":  4,
+                      "type":  "length",
+                      "label":  "kilometer",
+                      "symbol":  "km"
+                  },
+                  {
+                      "id":  5,
+                      "type":  "length",
+                      "label":  "inch",
+                      "symbol":  "in"
+                  },
+                  {
+                      "id":  6,
+                      "type":  "length",
+                      "label":  "foot",
+                      "symbol":  "ft"
+                  },
+                  {
+                      "id":  7,
+                      "type":  "length",
+                      "label":  "yard",
+                      "symbol":  "yd"
+                  },
+                  {
+                      "id":  8,
+                      "type":  "length",
+                      "label":  "mile",
+                      "symbol":  "mi"
+                  },
+                  {
+                      "id":  9,
+                      "type":  "weight",
+                      "label":  "tonne",
+                      "symbol":  "t"
+                  },
+                  {
+                      "id":  10,
+                      "type":  "weight",
+                      "label":  "kilogram",
+                      "symbol":  "kg"
+                  },
+                  {
+                      "id":  11,
+                      "type":  "weight",
+                      "label":  "gram",
+                      "symbol":  "g"
+                  },
+                  {
+                      "id":  12,
+                      "type":  "weight",
+                      "label":  "pound",
+                      "symbol":  "lb"
+                  },
+                  {
+                      "id":  13,
+                      "type":  "weight",
+                      "label":  "ounce",
+                      "symbol":  "oz"
+                  },
+                  {
+                      "id":  14,
+                      "type":  "temperature",
+                      "label":  "celsius",
+                      "symbol":  "C"
+                  },
+                  {
+                      "id":  15,
+                      "type":  "temperature",
+                      "label":  "fahrenheit",
+                      "symbol":  "F"
+                  },
+                  {
+                      "id":  16,
+                      "type":  "temperature",
+                      "label":  "kelvin",
+                      "symbol":  "K"
+                  },
+                  {
+                      "id":  17,
+                      "type":  "volume",
+                      "label":  "liter",
+                      "symbol":  "L"
+                  },
+                  {
+                      "id":  18,
+                      "type":  "volume",
+                      "label":  "milliliter",
+                      "symbol":  "mL"
+                  },
+                  {
+                      "id":  19,
+                      "type":  "volume",
+                      "label":  "gallon",
+                      "symbol":  "gal"
+                  },
+                  {
+                      "id":  20,
+                      "type":  "volume",
+                      "label":  "cubic meter",
+                      "symbol":  "m3"
+                  }
+              ],
+    "conversions":  [
+                        {
+                            "from":  "m",
+                            "to":  "m",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m",
+                            "to":  "cm",
+                            "factor":  100,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m",
+                            "to":  "mm",
+                            "factor":  1000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m",
+                            "to":  "km",
+                            "factor":  0.001,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m",
+                            "to":  "in",
+                            "factor":  39.370078740157,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m",
+                            "to":  "ft",
+                            "factor":  3.280839895013,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m",
+                            "to":  "yd",
+                            "factor":  1.093613298338,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m",
+                            "to":  "mi",
+                            "factor":  0.000621371192,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "m",
+                            "factor":  0.01,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "cm",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "mm",
+                            "factor":  10,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "km",
+                            "factor":  1E-05,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "in",
+                            "factor":  0.393700787402,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "ft",
+                            "factor":  0.03280839895,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "yd",
+                            "factor":  0.010936132983,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "cm",
+                            "to":  "mi",
+                            "factor":  6.213712E-06,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "m",
+                            "factor":  0.001,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "cm",
+                            "factor":  0.1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "mm",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "km",
+                            "factor":  1E-06,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "in",
+                            "factor":  0.03937007874,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "ft",
+                            "factor":  0.003280839895,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "yd",
+                            "factor":  0.001093613298,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mm",
+                            "to":  "mi",
+                            "factor":  6.21371E-07,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "m",
+                            "factor":  1000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "cm",
+                            "factor":  100000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "mm",
+                            "factor":  1000000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "km",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "in",
+                            "factor":  39370.078740157485,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "ft",
+                            "factor":  3280.8398950131232,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "yd",
+                            "factor":  1093.6132983377081,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "km",
+                            "to":  "mi",
+                            "factor":  0.621371192237,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "m",
+                            "factor":  0.0254,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "cm",
+                            "factor":  2.54,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "mm",
+                            "factor":  25.4,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "km",
+                            "factor":  2.54E-05,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "in",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "ft",
+                            "factor":  0.083333333333,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "yd",
+                            "factor":  0.027777777778,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "in",
+                            "to":  "mi",
+                            "factor":  1.5782828E-05,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "m",
+                            "factor":  0.3048,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "cm",
+                            "factor":  30.48,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "mm",
+                            "factor":  304.8,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "km",
+                            "factor":  0.0003048,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "in",
+                            "factor":  12,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "ft",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "yd",
+                            "factor":  0.333333333333,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "ft",
+                            "to":  "mi",
+                            "factor":  0.000189393939,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "m",
+                            "factor":  0.9144,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "cm",
+                            "factor":  91.44,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "mm",
+                            "factor":  914.4,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "km",
+                            "factor":  0.0009144,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "in",
+                            "factor":  36,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "ft",
+                            "factor":  3,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "yd",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "yd",
+                            "to":  "mi",
+                            "factor":  0.000568181818,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "m",
+                            "factor":  1609.344,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "cm",
+                            "factor":  160934.4,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "mm",
+                            "factor":  1609344,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "km",
+                            "factor":  1.609344,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "in",
+                            "factor":  63360.000000000007,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "ft",
+                            "factor":  5280,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "yd",
+                            "factor":  1760,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mi",
+                            "to":  "mi",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "t",
+                            "to":  "t",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "t",
+                            "to":  "kg",
+                            "factor":  1000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "t",
+                            "to":  "g",
+                            "factor":  1000000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "t",
+                            "to":  "lb",
+                            "factor":  2204.6226218487759,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "t",
+                            "to":  "oz",
+                            "factor":  35273.961949580415,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "kg",
+                            "to":  "t",
+                            "factor":  0.001,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "kg",
+                            "to":  "kg",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "kg",
+                            "to":  "g",
+                            "factor":  1000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "kg",
+                            "to":  "lb",
+                            "factor":  2.204622621849,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "kg",
+                            "to":  "oz",
+                            "factor":  35.27396194958,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "g",
+                            "to":  "t",
+                            "factor":  1E-06,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "g",
+                            "to":  "kg",
+                            "factor":  0.001,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "g",
+                            "to":  "g",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "g",
+                            "to":  "lb",
+                            "factor":  0.002204622622,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "g",
+                            "to":  "oz",
+                            "factor":  0.03527396195,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "lb",
+                            "to":  "t",
+                            "factor":  0.00045359237,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "lb",
+                            "to":  "kg",
+                            "factor":  0.45359237,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "lb",
+                            "to":  "g",
+                            "factor":  453.59237,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "lb",
+                            "to":  "lb",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "lb",
+                            "to":  "oz",
+                            "factor":  16,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "oz",
+                            "to":  "t",
+                            "factor":  2.8349523E-05,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "oz",
+                            "to":  "kg",
+                            "factor":  0.028349523125,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "oz",
+                            "to":  "g",
+                            "factor":  28.349523125,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "oz",
+                            "to":  "lb",
+                            "factor":  0.0625,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "oz",
+                            "to":  "oz",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "L",
+                            "to":  "L",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "L",
+                            "to":  "mL",
+                            "factor":  1000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "L",
+                            "to":  "gal",
+                            "factor":  0.264172052358,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "L",
+                            "to":  "m3",
+                            "factor":  0.001,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mL",
+                            "to":  "L",
+                            "factor":  0.001,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mL",
+                            "to":  "mL",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mL",
+                            "to":  "gal",
+                            "factor":  0.000264172052,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "mL",
+                            "to":  "m3",
+                            "factor":  1E-06,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "gal",
+                            "to":  "L",
+                            "factor":  3.785411784,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "gal",
+                            "to":  "mL",
+                            "factor":  3785.411784,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "gal",
+                            "to":  "gal",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "gal",
+                            "to":  "m3",
+                            "factor":  0.003785411784,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m3",
+                            "to":  "L",
+                            "factor":  1000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m3",
+                            "to":  "mL",
+                            "factor":  1000000,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m3",
+                            "to":  "gal",
+                            "factor":  264.172052358148,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "m3",
+                            "to":  "m3",
+                            "factor":  1,
+                            "formula":  null
+                        },
+                        {
+                            "from":  "C",
+                            "to":  "C",
+                            "factor":  null,
+                            "formula":  "x"
+                        },
+                        {
+                            "from":  "C",
+                            "to":  "F",
+                            "factor":  null,
+                            "formula":  "(x*9/5)+32"
+                        },
+                        {
+                            "from":  "C",
+                            "to":  "K",
+                            "factor":  null,
+                            "formula":  "x+273.15"
+                        },
+                        {
+                            "from":  "F",
+                            "to":  "C",
+                            "factor":  null,
+                            "formula":  "(x-32)*5/9"
+                        },
+                        {
+                            "from":  "F",
+                            "to":  "F",
+                            "factor":  null,
+                            "formula":  "x"
+                        },
+                        {
+                            "from":  "F",
+                            "to":  "K",
+                            "factor":  null,
+                            "formula":  "((x-32)*5/9)+273.15"
+                        },
+                        {
+                            "from":  "K",
+                            "to":  "C",
+                            "factor":  null,
+                            "formula":  "x-273.15"
+                        },
+                        {
+                            "from":  "K",
+                            "to":  "F",
+                            "factor":  null,
+                            "formula":  "((x-273.15)*9/5)+32"
+                        },
+                        {
+                            "from":  "K",
+                            "to":  "K",
+                            "factor":  null,
+                            "formula":  "x"
+                        }
+                    ],
+    "history":  [
+
+                ]
+}
