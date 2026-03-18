@@ -156,7 +156,7 @@ input {
   top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 10px;
+  margin-top: 30px;
 }
 .btn-reset:hover{
   font-size: larger;
@@ -170,7 +170,7 @@ input {
   top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .dropdown-head:hover + .dropdown-list,
