@@ -1,5 +1,4 @@
 // conversionUtils.js
-
 export function applyConversion(value, convObj) {
   // Preconditions
   if (isNaN(value) || !isFinite(value)) {
