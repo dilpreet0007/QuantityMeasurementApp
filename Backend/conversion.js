@@ -7,7 +7,6 @@ export async function performConversion(fromVal, fromUnit, toUnit) {
 
     let result;
     if (conversion.formula) {
-      // Replace x in formula with the input value
       result = eval(conversion.formula.replace(/x/g, fromVal));
     } else {
       result = fromVal * conversion.factor;

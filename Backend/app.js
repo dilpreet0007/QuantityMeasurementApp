@@ -1,7 +1,6 @@
 // app.js
-import { getUnits } from "./api.js";
+import { getUnits, saveHistory, getHistory } from "./api.js";
 import { performConversion } from "./conversion.js";
-import { saveHistory } from "./api.js";
 
 // --- Global State ---
 const state = {
@@ -15,37 +14,57 @@ const state = {
 };
 
 let cachedUnits = [];
-let cachedHistory = [];
 
-const convertBtn = document.querySelector(".btn-reset");
-if (convertBtn) {
-  convertBtn.addEventListener("click", async () => {
-    const fromVal = parseFloat(document.querySelector("input[type='number']").value);
-    state.fromVal = fromVal;
-
-    const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
-    if (result !== null) {
-      state.toVal = result;
-      document.querySelector("input[readonly]").value = result;
-
-      // Prepare history record
-      const record = {
-        type: state.type,
-        action: state.action,
-        expression: `${fromVal} ${state.fromUnit} → ${result} ${state.toUnit}`,
-        result,
-        timestamp: new Date().toISOString()
-      };
-
-      // Save to history
-      await saveHistory(record);
-    } else {
-      showErrorBanner("Conversion not available for this pair");
+// --- Load History ---
+async function loadHistory() {
+  const items = await getHistory();
+  const historyContainer = document.querySelector("#history");
+  if (historyContainer) {
+    historyContainer.innerHTML = "";
+    if (items.length === 0) {
+      historyContainer.textContent = "No history yet.";
+      return;
     }
-  });
+    items.forEach((entry) => {
+      const div = document.createElement("div");
+      div.textContent = `${entry.expression} = ${entry.result}`;
+      historyContainer.appendChild(div);
+    });
+  }
 }
 
-// --- Load Units (populate your custom dropdowns) ---
+// --- Conversion Trigger ---
+function attachConversionListener() {
+  const convertBtn = document.querySelector(".btn-reset");
+  if (convertBtn) {
+    convertBtn.addEventListener("click", async () => {
+      const fromVal = parseFloat(document.querySelector("input[type='number']").value);
+      state.fromVal = fromVal;
+
+      const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
+      if (result !== null) {
+        state.toVal = result;
+        document.querySelector("input[readonly]").value = result;
+
+        // Prepare history record
+        const record = {
+          type: state.type,
+          action: state.action,
+          expression: `${fromVal} ${state.fromUnit} → ${result} ${state.toUnit}`,
+          result,
+          timestamp: new Date().toISOString()
+        };
+
+        await saveHistory(record);
+        await loadHistory(); // refresh immediately
+      } else {
+        showErrorBanner("Conversion not available for this pair");
+      }
+    });
+  }
+}
+
+// --- Load Units ---
 async function loadUnits(type) {
   const units = await getUnits(type);
   if (!units || units.length === 0) {
@@ -54,7 +73,6 @@ async function loadUnits(type) {
   }
 
   cachedUnits = units;
-
   const dropdownLists = document.querySelectorAll(".dropdown-list");
   dropdownLists.forEach((list, idx) => {
     list.innerHTML = "";
@@ -68,12 +86,8 @@ async function loadUnits(type) {
       optionDiv.addEventListener("click", () => {
         const head = list.parentElement.querySelector(".dropdown-head span");
         if (head) head.textContent = unit.label;
-
-        if (idx === 0) {
-          state.fromUnit = unit.symbol;
-        } else {
-          state.toUnit = unit.symbol;
-        }
+        if (idx === 0) state.fromUnit = unit.symbol;
+        else state.toUnit = unit.symbol;
       });
 
       list.appendChild(optionDiv);
@@ -108,30 +122,6 @@ function toggleOperators(show) {
   operatorRow.style.display = show ? "flex" : "none";
 }
 
-// --- Load History ---
-async function loadHistory() {
-  try {
-    const response = await fetch("http://localhost:3000/history");
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const historyPayload = await response.json();
-    const items = Array.isArray(historyPayload) ? historyPayload : historyPayload?.history || [];
-    cachedHistory = items;
-
-    const historyContainer = document.querySelector("#history");
-    if (historyContainer) {
-      historyContainer.innerHTML = "";
-      items.forEach((entry) => {
-        const div = document.createElement("div");
-        div.textContent = `${entry.fromVal} ${entry.fromUnit} → ${entry.toVal} ${entry.toUnit}`;
-        historyContainer.appendChild(div);
-      });
-    }
-  } catch (error) {
-    showErrorBanner("Failed to load history");
-  }
-}
-
 // --- Event Listeners ---
 function attachEventListeners() {
   const cards = document.querySelectorAll(".card");
@@ -146,7 +136,7 @@ function attachEventListeners() {
       state.type = selectedType;
       try {
         await loadUnits(state.type);
-      } catch (error) {
+      } catch {
         showErrorBanner("Failed to load units");
       }
     });
@@ -169,22 +159,7 @@ function attachEventListeners() {
     });
   }
 
-  // Conversion trigger (Reset button used as Convert)
-  const convertBtn = document.querySelector(".btn-reset");
-  if (convertBtn) {
-    convertBtn.addEventListener("click", async () => {
-      const fromVal = parseFloat(document.querySelector("input[type='number']").value);
-      state.fromVal = fromVal;
-
-      const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
-      if (result !== null) {
-        state.toVal = result;
-        document.querySelector("input[readonly]").value = result;
-      } else {
-        showErrorBanner("Conversion not available for this pair");
-      }
-    });
-  }
+  attachConversionListener();
 }
 
 // --- Initial Active Selections ---
@@ -198,15 +173,12 @@ function setInitialActiveSelections() {
 // --- Initialise ---
 document.addEventListener("DOMContentLoaded", async () => {
   attachEventListeners();
-
   try {
     await loadUnits("length");
-  } catch (error) {
+  } catch {
     showErrorBanner("Failed to load units");
   }
-
   setInitialActiveSelections();
   toggleOperators(false);
-
   await loadHistory();
 });

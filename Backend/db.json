@@ -961,6 +961,38 @@
       "expression": "10 m → 1000 cm",
       "result": 1000,
       "timestamp": "2026-03-20T06:27:58.715Z"
+    },
+    {
+      "id": "101d",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T09:01:51.488Z"
+    },
+    {
+      "id": "6bfa",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T09:01:56.706Z"
+    },
+    {
+      "id": "115a",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1 cm → 1 cm",
+      "result": 1,
+      "timestamp": "2026-03-20T09:02:45.131Z"
+    },
+    {
+      "id": "4634",
+      "type": "length",
+      "action": "conversion",
+      "expression": "100000 m → 10000000 cm",
+      "result": 10000000,
+      "timestamp": "2026-03-20T09:04:49.282Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
