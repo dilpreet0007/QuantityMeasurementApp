@@ -46,7 +46,6 @@ function attachConversionListener() {
         state.toVal = result;
         document.querySelector("input[readonly]").value = result;
 
-        // Prepare history record
         const record = {
           type: state.type,
           action: state.action,
@@ -56,7 +55,7 @@ function attachConversionListener() {
         };
 
         await saveHistory(record);
-        await loadHistory(); // refresh immediately
+        await loadHistory();
       } else {
         showErrorBanner("Conversion not available for this pair");
       }

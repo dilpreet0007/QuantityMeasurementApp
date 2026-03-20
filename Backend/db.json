@@ -993,6 +993,30 @@
       "expression": "100000 m → 10000000 cm",
       "result": 10000000,
       "timestamp": "2026-03-20T09:04:49.282Z"
+    },
+    {
+      "id": "a457",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T10:23:38.209Z"
+    },
+    {
+      "id": "230b",
+      "type": "temperature",
+      "action": "conversion",
+      "expression": "0 C → 32 F",
+      "result": 32,
+      "timestamp": "2026-03-20T10:24:01.471Z"
+    },
+    {
+      "id": "726f",
+      "type": "temperature",
+      "action": "conversion",
+      "expression": "1 C → 33.8 F",
+      "result": 33.8,
+      "timestamp": "2026-03-20T10:24:27.189Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
