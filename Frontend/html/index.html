@@ -1,87 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quantity Measurement</title>
-  <link rel="stylesheet" href="/Frontend/css/style.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/Frontend/css/style.css"/>
 </head>
+
 <body>
-  <div id="root">
-    <header>
-      <h1>Welcome To Quantity Measurement</h1>
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <h1>📏 Quantity Measurement</h1>
+      <p class="subtitle">Convert, Compare & Calculate Units Easily</p>
     </header>
-    <main>
-      <!-- Choose Type -->
-      <section>
-        <h2>CHOOSE TYPE</h2>
-        <div class="grid" id="categoryGrid">
-          <div class="card active"><span>Length</span></div>
-          <div class="card"><span>Weight</span></div>
-          <div class="card"><span>Temperature</span></div>
-          <div class="card"><span>Volume</span></div>
-        </div>
-      </section>
 
-      <!-- Choose Action -->
-      <section>
-        <h2>CHOOSE ACTION</h2>
-        <div class="tabs">
-          <button class="btn active">Conversion</button>
-          <button class="btn">Comparison</button>
-          <button class="btn">Arithmetic</button>
-        </div>
-      </section>
-
-      <!-- Input / Output -->
-      <section>
-        <div class="flex">
-          <div class="group">
-            <label>FROM</label>
-            <input step="any" type="number" value="1">
-            <div class="dropdown">
-              <div class="dropdown-head"><span>Kilometer</span><span class="arrow">▲</span></div>
-              <div class="dropdown-list"></div>
-            </div>
-          </div>
-          <div class="group">
-            <label>TO</label>
-            <input readonly type="text" value="">
-            <div class="dropdown">
-              <div class="dropdown-head"><span>Meters</span><span class="arrow">▲</span></div>
-              <div class="dropdown-list"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Operator Row (hidden unless Arithmetic is selected) -->
-        <div class="operator-row" style="display:none;">
-          <label>Operator</label>
-          <select class="operator-dropdown">
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">*</option>
-            <option value="/">/</option>
-          </select>
-        </div>
-
-        <button class="btn-reset">Convert</button>
-      </section>
-      <div class="res">
-          <!-- Comparison Result -->
-          <section>
-            <h2>Comparison Result</h2>
-            <div id="comparison-result">No comparison yet.</div>
-          </section>
-
-          <!-- History Section -->
-          <section>
-            <h2>History</h2>
-            <div id="history">No history yet.</div>
-          </section>
+    <!-- TYPE SELECTION -->
+    <section class="card-section">
+      <h2>Select Type</h2>
+      <div class="card-grid">
+        <div class="card active"><span>Length</span></div>
+        <div class="card"><span>Weight</span></div>
+        <div class="card"><span>Temperature</span></div>
+        <div class="card"><span>Volume</span></div>
       </div>
-      
-    </main>
+    </section>
+
+    <!-- ACTION TABS -->
+    <section class="card-section">
+      <h2>Select Action</h2>
+      <div class="tabs">
+        <button class="btn active">Conversion</button>
+        <button class="btn">Comparison</button>
+        <button class="btn">Arithmetic</button>
+      </div>
+    </section>
+
+    <!-- INPUT PANEL -->
+    <section class="card-section input-panel">
+
+      <!-- FROM -->
+      <div class="input-group">
+        <label>From</label>
+        <div class="input-row">
+          <input type="number" id="from-value" placeholder="Enter value" />
+          <div class="dropdown">
+            <div class="dropdown-head">
+              <span>Select Unit</span>
+              <span>▼</span>
+            </div>
+            <div class="dropdown-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TO -->
+      <div class="input-group to-group">
+        <label>To</label>
+        <div class="input-row">
+          <input type="text" id="to-value" placeholder="Result" readonly />
+          <div class="dropdown">
+            <div class="dropdown-head">
+              <span>Select Unit</span>
+              <span>▼</span>
+            </div>
+            <div class="dropdown-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECOND VALUE (Comparison + Arithmetic) -->
+      <div class="input-group second-value" style="display:none;">
+        <label>Second Value</label>
+        <div class="input-row">
+          <input type="number" id="second-value" placeholder="Enter second value" />
+          <div class="dropdown">
+            <div class="dropdown-head">
+              <span>Select Unit</span>
+              <span>▼</span>
+            </div>
+            <div class="dropdown-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPERATOR -->
+      <div class="operator-row" style="display:none;">
+        <label>Operator</label>
+        <select class="operator-dropdown">
+          <option value="+">Addition (+)</option>
+          <option value="-">Subtraction (-)</option>
+          <option value="*">Multiplication (×)</option>
+          <option value="/">Division (÷)</option>
+        </select>
+      </div>
+
+      <!-- ACTION BUTTON -->
+      <button class="btn-reset">Calculate</button>
+
+    </section>
+
+    <!-- RESULT -->
+    <section class="card-section result-panel">
+      <h2>Result</h2>
+      <div id="comparison-result" class="result-box">
+        No result yet
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="card-section">
+      <div class="history-header">
+        <h2>History</h2>
+        <button id="clear-history">Clear</button>
+      </div>
+      <div id="history" class="history-box">
+        No history yet
+      </div>
+    </section>
+
   </div>
 
   <script type="module" src="/Backend/app.js"></script>
