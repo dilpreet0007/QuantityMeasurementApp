@@ -1017,6 +1017,214 @@
       "expression": "1 C → 33.8 F",
       "result": 33.8,
       "timestamp": "2026-03-20T10:24:27.189Z"
+    },
+    {
+      "id": "d27e",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T11:10:55.846Z"
+    },
+    {
+      "id": "4af8",
+      "type": "length",
+      "action": "conversion",
+      "expression": "100 m → 10000 cm",
+      "result": 10000,
+      "timestamp": "2026-03-20T11:11:01.046Z"
+    },
+    {
+      "id": "d132",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T11:11:47.740Z"
+    },
+    {
+      "id": "6e64",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1000 m → 100000 cm",
+      "result": 100000,
+      "timestamp": "2026-03-20T11:11:53.082Z"
+    },
+    {
+      "id": "39ca",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T11:13:13.948Z"
+    },
+    {
+      "id": "5d6e",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T11:14:10.981Z"
+    },
+    {
+      "id": "a738",
+      "type": "length",
+      "action": "conversion",
+      "expression": "100000000000 m → 10000000000000 cm",
+      "result": 10000000000000,
+      "timestamp": "2026-03-20T11:14:33.425Z"
+    },
+    {
+      "id": "6cea",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1 m → 100 cm",
+      "result": 100,
+      "timestamp": "2026-03-20T11:17:53.975Z"
+    },
+    {
+      "id": "419a",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1 m → 100 cm",
+      "result": 100,
+      "timestamp": "2026-03-20T11:17:55.917Z"
+    },
+    {
+      "id": "693e",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1 m → 100 cm",
+      "result": 100,
+      "timestamp": "2026-03-20T11:17:57.136Z"
+    },
+    {
+      "id": "37dd",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1 m → 100 cm",
+      "result": 100,
+      "timestamp": "2026-03-20T11:17:59.518Z"
+    },
+    {
+      "id": "a598",
+      "type": "length",
+      "action": "conversion",
+      "expression": "100 m → 10000 cm",
+      "result": 10000,
+      "timestamp": "2026-03-20T11:18:03.497Z"
+    },
+    {
+      "id": "e5ca",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-20T11:28:23.771Z"
+    },
+    {
+      "id": "b61a",
+      "type": "length",
+      "action": "conversion",
+      "expression": "111 m → 11100 cm",
+      "result": 11100,
+      "timestamp": "2026-03-20T11:29:35.632Z"
+    },
+    {
+      "id": "c0bd",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1 ft → 12 in",
+      "result": 12,
+      "timestamp": "2026-03-20T11:30:03.796Z"
+    },
+    {
+      "id": "3c28",
+      "type": "length",
+      "action": "comparison",
+      "expression": "10 ft is GREATER than 10 10",
+      "result": null,
+      "timestamp": "2026-03-20T11:30:42.541Z"
+    },
+    {
+      "id": "e0eb",
+      "type": "length",
+      "action": "comparison",
+      "expression": "10 m is GREATER than 10 10",
+      "result": null,
+      "timestamp": "2026-03-20T11:34:57.211Z"
+    },
+    {
+      "id": "484c",
+      "type": "length",
+      "action": "comparison",
+      "expression": "1 m is LESS than 2 km",
+      "result": null,
+      "timestamp": "2026-03-20T11:35:38.512Z"
+    },
+    {
+      "id": "4c0d",
+      "type": "length",
+      "action": "comparison",
+      "expression": "1 km is LESS than 2 km",
+      "result": null,
+      "timestamp": "2026-03-20T11:36:06.210Z"
+    },
+    {
+      "id": "c6fe",
+      "type": "length",
+      "action": "comparison",
+      "expression": "10 km is GREATER than 5 km",
+      "result": null,
+      "timestamp": "2026-03-20T11:36:36.269Z"
+    },
+    {
+      "id": "4d9b",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1 km → 100000 cm",
+      "result": 100000,
+      "timestamp": "2026-03-20T11:38:06.793Z"
+    },
+    {
+      "id": "eee0",
+      "type": "length",
+      "action": "comparison",
+      "expression": "1 km is LESS than 22 km",
+      "result": null,
+      "timestamp": "2026-03-20T11:38:20.477Z"
+    },
+    {
+      "id": "62a7",
+      "type": "length",
+      "action": "comparison",
+      "expression": "1 cm is LESS than 2 cm",
+      "result": null,
+      "timestamp": "2026-03-20T11:39:53.060Z"
+    },
+    {
+      "id": "1dba",
+      "type": "length",
+      "action": "comparison",
+      "expression": "10 cm is LESS than 20 cm",
+      "result": null,
+      "timestamp": "2026-03-20T11:40:07.063Z"
+    },
+    {
+      "id": "8e82",
+      "type": "length",
+      "action": "comparison",
+      "expression": "100 cm is LESS than 200 cm",
+      "result": null,
+      "timestamp": "2026-03-20T11:42:15.876Z"
+    },
+    {
+      "id": "149f",
+      "type": "length",
+      "action": "conversion",
+      "expression": "10 km → 10000 m",
+      "result": 10000,
+      "timestamp": "2026-03-20T11:44:42.648Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

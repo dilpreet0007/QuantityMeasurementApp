@@ -12,37 +12,28 @@
       <h1>Welcome To Quantity Measurement</h1>
     </header>
     <main>
+      <!-- Choose Type -->
       <section>
         <h2>CHOOSE TYPE</h2>
         <div class="grid" id="categoryGrid">
-          <div class="card active">
-            <div class="icon"></div>
-            <span>Length</span>
-          </div>
-          <div class="card">
-            <div class="icon"></div>
-            <span>Weight</span>
-          </div>
-          <div class="card">
-            <div class="icon"></div>
-            <span>Temperature</span>
-          </div>
-          <div class="card">
-            <div class="icon"></div>
-            <span>Volume</span>
-          </div>
+          <div class="card active"><span>Length</span></div>
+          <div class="card"><span>Weight</span></div>
+          <div class="card"><span>Temperature</span></div>
+          <div class="card"><span>Volume</span></div>
         </div>
       </section>
 
+      <!-- Choose Action -->
       <section>
         <h2>CHOOSE ACTION</h2>
         <div class="tabs">
-          <button class="btn active">Comparison</button>
-          <button class="btn">Conversion</button>
+          <button class="btn active">Conversion</button>
+          <button class="btn">Comparison</button>
           <button class="btn">Arithmetic</button>
         </div>
       </section>
 
+      <!-- Input / Output -->
       <section>
         <div class="flex">
           <div class="group">
@@ -50,41 +41,49 @@
             <input step="any" type="number" value="1">
             <div class="dropdown">
               <div class="dropdown-head"><span>Kilometer</span><span class="arrow">▲</span></div>
-              <div class="dropdown-list">
-                <div class="option active">Kilometer</div>
-                <div class="option">Meters</div>
-                <div class="option">Centimeters</div>
-                <div class="option">Millimeters</div>
-                <div class="option">Mile</div>
-                <div class="option">Yard</div>
-                <div class="option">Feet</div>
-                <div class="option">Inch</div>
-              </div>
+              <div class="dropdown-list"></div>
             </div>
           </div>
           <div class="group">
             <label>TO</label>
-            <input readonly type="text" value="1000">
+            <input readonly type="text" value="">
             <div class="dropdown">
               <div class="dropdown-head"><span>Meters</span><span class="arrow">▲</span></div>
-              <div class="dropdown-list">
-                <div class="option">Kilometer</div>
-                <div class="option active">Meters</div>
-                <div class="option">Centimeters</div>
-                <div class="option">Millimeters</div>
-                <div class="option">Mile</div>
-                <div class="option">Yard</div>
-                <div class="option">Feet</div>
-                <div class="option">Inch</div>
-              </div>
+              <div class="dropdown-list"></div>
             </div>
           </div>
         </div>
-        <button class="btn-reset">Reset</button>
+
+        <!-- Operator Row (hidden unless Arithmetic is selected) -->
+        <div class="operator-row" style="display:none;">
+          <label>Operator</label>
+          <select class="operator-dropdown">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+          </select>
+        </div>
+
+        <button class="btn-reset">Convert</button>
       </section>
+      <div class="res">
+          <!-- Comparison Result -->
+          <section>
+            <h2>Comparison Result</h2>
+            <div id="comparison-result">No comparison yet.</div>
+          </section>
+
+          <!-- History Section -->
+          <section>
+            <h2>History</h2>
+            <div id="history">No history yet.</div>
+          </section>
+      </div>
+      
     </main>
   </div>
-  <script type="module" src="/Backend/app.js"></script>
 
+  <script type="module" src="/Backend/app.js"></script>
 </body>
 </html>

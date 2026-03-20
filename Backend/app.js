@@ -1,6 +1,6 @@
-// app.js
 import { getUnits, saveHistory, getHistory } from "./api.js";
 import { performConversion } from "./conversion.js";
+import { compareValues } from "./comparisonUtils.js";
 
 // --- Global State ---
 const state = {
@@ -15,6 +15,14 @@ const state = {
 
 let cachedUnits = [];
 
+// --- Base Units Map ---
+const baseUnits = {
+  length: "m",
+  weight: "kg",
+  temperature: "C",
+  volume: "L"
+};
+
 // --- Load History ---
 async function loadHistory() {
   const items = await getHistory();
@@ -27,37 +35,104 @@ async function loadHistory() {
     }
     items.forEach((entry) => {
       const div = document.createElement("div");
-      div.textContent = `${entry.expression} = ${entry.result}`;
+      div.textContent = `${entry.expression} ${entry.result !== null ? "= " + entry.result : ""}`;
       historyContainer.appendChild(div);
     });
   }
 }
 
-// --- Conversion Trigger ---
+// --- Conversion / Comparison / Arithmetic Trigger ---
 function attachConversionListener() {
   const convertBtn = document.querySelector(".btn-reset");
   if (convertBtn) {
+    convertBtn.textContent = "Convert";
     convertBtn.addEventListener("click", async () => {
       const fromVal = parseFloat(document.querySelector("input[type='number']").value);
       state.fromVal = fromVal;
 
-      const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
-      if (result !== null) {
-        state.toVal = result;
-        document.querySelector("input[readonly]").value = result;
+      if (state.action === "conversion") {
+        const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
+        if (result !== null) {
+          state.toVal = result;
+          document.querySelector("input[readonly]").value = result;
+
+          const record = {
+            type: state.type,
+            action: state.action,
+            expression: `${fromVal} ${state.fromUnit} → ${result} ${state.toUnit}`,
+            result,
+            timestamp: new Date().toISOString()
+          };
+
+          await saveHistory(record);
+          await loadHistory();
+        } else {
+          showErrorBanner("Conversion not available for this pair");
+        }
+      }
+
+      if (state.action === "comparison") {
+        const secondVal = parseFloat(prompt("Enter second value to compare:"));
+        const secondUnit = prompt("Enter second unit symbol:");
+
+        const baseUnit = baseUnits[state.type];
+        const base1 = await performConversion(fromVal, state.fromUnit, baseUnit);
+        const base2 = await performConversion(secondVal, secondUnit, baseUnit);
+
+        const comparisonSentence = compareValues(fromVal, state.fromUnit, secondVal, secondUnit, base1, base2);
+
+        // ✅ Show result in UI and keep it persistent
+        const compDiv = document.querySelector("#comparison-result");
+        if (compDiv) {
+          compDiv.textContent = comparisonSentence;
+        }
 
         const record = {
           type: state.type,
           action: state.action,
-          expression: `${fromVal} ${state.fromUnit} → ${result} ${state.toUnit}`,
+          expression: comparisonSentence,
+          result: null,
+          timestamp: new Date().toISOString()
+        };
+        await saveHistory(record);
+
+        // Only reload history list, not comparison result
+        await loadHistory();
+      }
+
+      if (state.action === "arithmetic") {
+        const secondVal = parseFloat(prompt("Enter second value:"));
+        const secondUnit = prompt("Enter second unit symbol:");
+
+        const baseUnit = baseUnits[state.type];
+        const base1 = await performConversion(fromVal, state.fromUnit, baseUnit);
+        const base2 = await performConversion(secondVal, secondUnit, baseUnit);
+
+        let result;
+        switch (state.operator) {
+          case "+": result = base1 + base2; break;
+          case "-": result = base1 - base2; break;
+          case "*": result = base1 * base2; break;
+          case "/": result = base2 !== 0 ? base1 / base2 : "Division by zero"; break;
+        }
+
+        // ✅ Show arithmetic result in UI
+        const compDiv = document.querySelector("#comparison-result");
+        if (compDiv) {
+          compDiv.textContent = `Result: ${result} ${baseUnit}`;
+        }
+
+        const record = {
+          type: state.type,
+          action: state.action,
+          expression: `${fromVal} ${state.fromUnit} ${state.operator} ${secondVal} ${secondUnit}`,
           result,
           timestamp: new Date().toISOString()
         };
-
         await saveHistory(record);
+
+        // Only reload history list
         await loadHistory();
-      } else {
-        showErrorBanner("Conversion not available for this pair");
       }
     });
   }
@@ -94,7 +169,7 @@ async function loadUnits(type) {
   });
 
   state.fromUnit = units[0]?.symbol || "";
-  state.toUnit = units[1]?.symbol || "";
+  state.toUnit = units[1]?.symbol || units[0]?.symbol || "";
 }
 
 // --- Error Banner ---
@@ -161,14 +236,6 @@ function attachEventListeners() {
   attachConversionListener();
 }
 
-// --- Initial Active Selections ---
-function setInitialActiveSelections() {
-  const firstTypeCard = document.querySelector(".card");
-  const firstActionButton = document.querySelector(".btn");
-  if (firstTypeCard) firstTypeCard.classList.add("active");
-  if (firstActionButton) firstActionButton.classList.add("active");
-}
-
 // --- Initialise ---
 document.addEventListener("DOMContentLoaded", async () => {
   attachEventListeners();
@@ -177,7 +244,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch {
     showErrorBanner("Failed to load units");
   }
-  setInitialActiveSelections();
   toggleOperators(false);
   await loadHistory();
 });
