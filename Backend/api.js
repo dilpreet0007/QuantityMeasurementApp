@@ -36,3 +36,19 @@ export async function getConversion(from, to) {
     throw new Error("Conversion not available for this pair");
   }
 }
+
+export async function saveHistory(record) {
+  try {
+    const res = await fetch(`${BASE_URL}/history`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(record)
+    });
+
+    return await res.json(); // json-server returns the saved object with id
+  } catch (error) {
+    console.error("Error saving history:", error);
+    // Exception Flow: non-critical, do not block user
+    return null;
+  }
+}

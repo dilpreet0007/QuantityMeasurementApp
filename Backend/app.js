@@ -1,6 +1,7 @@
 // app.js
 import { getUnits } from "./api.js";
 import { performConversion } from "./conversion.js";
+import { saveHistory } from "./api.js";
 
 // --- Global State ---
 const state = {
@@ -15,6 +16,34 @@ const state = {
 
 let cachedUnits = [];
 let cachedHistory = [];
+
+const convertBtn = document.querySelector(".btn-reset");
+if (convertBtn) {
+  convertBtn.addEventListener("click", async () => {
+    const fromVal = parseFloat(document.querySelector("input[type='number']").value);
+    state.fromVal = fromVal;
+
+    const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
+    if (result !== null) {
+      state.toVal = result;
+      document.querySelector("input[readonly]").value = result;
+
+      // Prepare history record
+      const record = {
+        type: state.type,
+        action: state.action,
+        expression: `${fromVal} ${state.fromUnit} → ${result} ${state.toUnit}`,
+        result,
+        timestamp: new Date().toISOString()
+      };
+
+      // Save to history
+      await saveHistory(record);
+    } else {
+      showErrorBanner("Conversion not available for this pair");
+    }
+  });
+}
 
 // --- Load Units (populate your custom dropdowns) ---
 async function loadUnits(type) {
