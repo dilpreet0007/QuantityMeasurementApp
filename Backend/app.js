@@ -1,5 +1,6 @@
 // app.js
 import { getUnits } from "./api.js";
+import { performConversion } from "./conversion.js";
 
 // --- Global State ---
 const state = {
@@ -25,9 +26,8 @@ async function loadUnits(type) {
 
   cachedUnits = units;
 
-  // Find all dropdown lists in your HTML
   const dropdownLists = document.querySelectorAll(".dropdown-list");
-  dropdownLists.forEach((list) => {
+  dropdownLists.forEach((list, idx) => {
     list.innerHTML = "";
     units.forEach((unit, index) => {
       const optionDiv = document.createElement("div");
@@ -37,17 +37,20 @@ async function loadUnits(type) {
       optionDiv.dataset.value = unit.symbol;
 
       optionDiv.addEventListener("click", () => {
-        // Update state when user selects
         const head = list.parentElement.querySelector(".dropdown-head span");
         if (head) head.textContent = unit.label;
-        state.fromUnit = unit.symbol;
+
+        if (idx === 0) {
+          state.fromUnit = unit.symbol;
+        } else {
+          state.toUnit = unit.symbol;
+        }
       });
 
       list.appendChild(optionDiv);
     });
   });
 
-  // Default selections
   state.fromUnit = units[0]?.symbol || "";
   state.toUnit = units[1]?.symbol || "";
 }
@@ -134,6 +137,23 @@ function attachEventListeners() {
   if (operatorDropdown) {
     operatorDropdown.addEventListener("change", (event) => {
       state.operator = event.target.value;
+    });
+  }
+
+  // Conversion trigger (Reset button used as Convert)
+  const convertBtn = document.querySelector(".btn-reset");
+  if (convertBtn) {
+    convertBtn.addEventListener("click", async () => {
+      const fromVal = parseFloat(document.querySelector("input[type='number']").value);
+      state.fromVal = fromVal;
+
+      const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
+      if (result !== null) {
+        state.toVal = result;
+        document.querySelector("input[readonly]").value = result;
+      } else {
+        showErrorBanner("Conversion not available for this pair");
+      }
     });
   }
 }
