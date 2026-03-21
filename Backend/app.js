@@ -37,11 +37,12 @@ function showResult(value, unitSymbol = "") {
   const resultBox = document.querySelector("#comparison-result");
   if (!resultBox) return;
 
+  const unitSuffix = unitSymbol ? ` ${unitSymbol}` : "";
   lastResult = value === null || value === undefined
     ? "—"
     : typeof value === "string"
       ? value
-      : `${value} ${unitSymbol}`;
+      : `${value}${unitSuffix}`;
 
   resultBox.textContent = lastResult;
 }
@@ -73,7 +74,7 @@ function showErrorBanner(msg) {
 
 // ---------------- HISTORY ----------------
 function renderHistory(records) {
-  const list = document.querySelector("#history-list");
+  const list = document.querySelector("#history-list") || document.querySelector(".history-box");
   if (!list) return;
 
   list.innerHTML = "";
@@ -91,12 +92,18 @@ function renderHistory(records) {
 }
 
 async function loadHistory() {
+  const list = document.querySelector("#history-list") || document.querySelector(".history-box");
+  if (list) list.innerHTML = "<li>Loading history...</li>";
+
   try {
     const items = await getHistory();
     renderHistory(items);
     restoreResult();
   } catch (err) {
     showErrorBanner("Failed to load history: " + err.message);
+    if (list) {
+      list.innerHTML = "<li>Failed to load history. Please confirm API server is running on localhost:3000.</li>";
+    }
   }
 }
 
@@ -176,6 +183,7 @@ function attachConversionListener() {
         const base = baseUnits[state.type];
         const v1 = await performConversion(fromVal, state.fromUnit, base);
         const v2 = await performConversion(secondVal, state.secondUnit, base);
+        if (v1 == null || v2 == null) return showErrorBanner("Comparison not available for selected units");
         const result = compareValues(fromVal, state.fromUnit, secondVal, state.secondUnit, v1, v2);
         showResult(result);
         await saveHistory({
@@ -190,6 +198,7 @@ function attachConversionListener() {
       if (state.action === "arithmetic") {
         if (isNaN(secondVal)) return showErrorBanner("Enter second value");
         const v2 = await performConversion(secondVal, state.secondUnit, state.fromUnit);
+        if (v2 == null) return showErrorBanner("Arithmetic not available for selected units");
         const result = performArithmetic(fromVal, v2, state.operator);
         showResult(result, state.fromUnit);
         await saveHistory({
