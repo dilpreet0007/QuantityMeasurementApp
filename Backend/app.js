@@ -21,10 +21,27 @@ const baseUnits = {
   volume: "L"
 };
 
-// --- HISTORY ---
+// =====================================================
+// ✅ UC-JS-11: SET ACTIVE FUNCTION
+// =====================================================
+function setActive(parentEl, clickedEl, childSelector) {
+  if (!parentEl) return;
+
+  parentEl.querySelectorAll(childSelector).forEach((el) =>
+    el.classList.remove("active")
+  );
+
+  clickedEl.classList.add("active");
+}
+
+// =====================================================
+// HISTORY
+// =====================================================
 async function loadHistory() {
   const items = await getHistory();
   const container = document.querySelector("#history");
+
+  if (!container) return;
 
   container.innerHTML = "";
 
@@ -42,64 +59,55 @@ async function loadHistory() {
   });
 }
 
-// --- LOAD UNITS (FIXED FOR SELECT) ---
+// =====================================================
+// LOAD UNITS INTO <select>
+// =====================================================
 async function loadUnits(type) {
   let units = await getUnits(type);
 
-  units = units.filter(u => u.type === type);
+  // safety filter
+  units = units.filter((u) => u.type === type);
 
-  console.log("Loaded units:", units);
+  if (!units.length) {
+    showErrorBanner("No units found");
+    return;
+  }
 
-  if (!units.length) return;
+  const fromSelect = document.querySelector("#from-unit");
+  const toSelect = document.querySelector("#to-unit");
+  const secondSelect = document.querySelector("#second-unit");
 
-  const fromSelect = document.getElementById("from-unit");
-  const toSelect = document.getElementById("to-unit");
-  const secondSelect = document.getElementById("second-unit");
-
+  // clear old
   fromSelect.innerHTML = "";
   toSelect.innerHTML = "";
   secondSelect.innerHTML = "";
 
-  units.forEach((unit, index) => {
-    const option1 = document.createElement("option");
-    option1.value = unit.symbol;
-    option1.textContent = `${unit.label} (${unit.symbol})`;
-
+  units.forEach((unit) => {
+    const option1 = new Option(
+      `${unit.label} (${unit.symbol})`,
+      unit.symbol
+    );
     const option2 = option1.cloneNode(true);
     const option3 = option1.cloneNode(true);
 
     fromSelect.appendChild(option1);
     toSelect.appendChild(option2);
     secondSelect.appendChild(option3);
-
-    if (index === 0) {
-      state.fromUnit = unit.symbol;
-      state.secondUnit = unit.symbol;
-    }
-    if (index === 1) {
-      state.toUnit = unit.symbol;
-    }
   });
 
-  if (!state.toUnit) state.toUnit = state.fromUnit;
+  // defaults
+  state.fromUnit = units[0].symbol;
+  state.toUnit = units[1]?.symbol || units[0].symbol;
+  state.secondUnit = units[0].symbol;
+
+  fromSelect.value = state.fromUnit;
+  toSelect.value = state.toUnit;
+  secondSelect.value = state.secondUnit;
 }
 
-// --- SELECT LISTENERS ---
-function attachSelectListeners() {
-  document.getElementById("from-unit").addEventListener("change", (e) => {
-    state.fromUnit = e.target.value;
-  });
-
-  document.getElementById("to-unit").addEventListener("change", (e) => {
-    state.toUnit = e.target.value;
-  });
-
-  document.getElementById("second-unit").addEventListener("change", (e) => {
-    state.secondUnit = e.target.value;
-  });
-}
-
-// --- CALCULATE ---
+// =====================================================
+// CALCULATE
+// =====================================================
 function attachConversionListener() {
   const btn = document.querySelector(".btn-reset");
 
@@ -152,7 +160,11 @@ function attachConversionListener() {
       const base = baseUnits[state.type];
 
       const v1 = await performConversion(fromVal, state.fromUnit, base);
-      const v2 = await performConversion(secondVal, state.secondUnit, base);
+      const v2 = await performConversion(
+        secondVal,
+        state.secondUnit,
+        base
+      );
 
       const result = compareValues(
         fromVal,
@@ -190,7 +202,11 @@ function attachConversionListener() {
           state.fromUnit
         );
 
-        const result = performArithmetic(fromVal, v2, state.operator);
+        const result = performArithmetic(
+          fromVal,
+          v2,
+          state.operator
+        );
 
         document.querySelector(
           "#comparison-result"
@@ -212,7 +228,9 @@ function attachConversionListener() {
   });
 }
 
-// --- ERROR ---
+// =====================================================
+// ERROR
+// =====================================================
 function showErrorBanner(msg) {
   let banner = document.getElementById("error-banner");
 
@@ -229,7 +247,9 @@ function showErrorBanner(msg) {
   banner.textContent = msg;
 }
 
-// --- UI TOGGLE ---
+// =====================================================
+// UI TOGGLE
+// =====================================================
 function toggleUI() {
   document.querySelector(".operator-row").style.display =
     state.action === "arithmetic" ? "block" : "none";
@@ -241,47 +261,60 @@ function toggleUI() {
     state.action === "conversion" ? "block" : "none";
 }
 
-// --- EVENTS ---
+// =====================================================
+// EVENTS
+// =====================================================
 function attachEventListeners() {
-  document.querySelectorAll(".card").forEach((card) => {
-    card.addEventListener("click", async () => {
-      document.querySelectorAll(".card").forEach((c) =>
-        c.classList.remove("active")
-      );
+  const cardContainer = document.querySelector(".card-grid");
+  const tabContainer = document.querySelector(".tabs");
 
-      card.classList.add("active");
+  // TYPE CARDS
+  cardContainer.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("click", async () => {
+      setActive(cardContainer, card, ".card");
 
       state.type = card.textContent.trim().toLowerCase();
       await loadUnits(state.type);
     });
   });
 
-  document.querySelectorAll(".btn").forEach((btn) => {
+  // ACTION TABS
+  tabContainer.querySelectorAll(".btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".btn").forEach((b) =>
-        b.classList.remove("active")
-      );
-
-      btn.classList.add("active");
+      setActive(tabContainer, btn, ".btn");
 
       state.action = btn.textContent.toLowerCase().trim();
       toggleUI();
     });
   });
 
+  // SELECT EVENTS
+  document.querySelector("#from-unit").addEventListener("change", (e) => {
+    state.fromUnit = e.target.value;
+  });
+
+  document.querySelector("#to-unit").addEventListener("change", (e) => {
+    state.toUnit = e.target.value;
+  });
+
+  document.querySelector("#second-unit").addEventListener("change", (e) => {
+    state.secondUnit = e.target.value;
+  });
+
   document
     .querySelector(".operator-dropdown")
-    ?.addEventListener("change", (e) => {
+    .addEventListener("change", (e) => {
       state.operator = e.target.value;
     });
 
   attachConversionListener();
 }
 
-// --- INIT ---
+// =====================================================
+// INIT
+// =====================================================
 document.addEventListener("DOMContentLoaded", async () => {
   attachEventListeners();
-  attachSelectListeners();   // ✅ IMPORTANT
   await loadUnits("length");
   toggleUI();
   loadHistory();

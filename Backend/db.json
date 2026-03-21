@@ -969,6 +969,14 @@
       "expression": "1000 km / 10 km",
       "result": 100,
       "timestamp": "2026-03-21T10:03:51.666Z"
+    },
+    {
+      "id": "9614",
+      "type": "length",
+      "action": "comparison",
+      "expression": "100 m is LESS than 200 m",
+      "result": null,
+      "timestamp": "2026-03-21T10:12:29.341Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
