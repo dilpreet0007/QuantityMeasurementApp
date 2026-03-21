@@ -1185,6 +1185,14 @@
       "expression": "122 m is LESS than 222221112 cm",
       "result": null,
       "timestamp": "2026-03-21T13:15:53.220Z"
+    },
+    {
+      "id": "1d71",
+      "type": "length",
+      "action": "conversion",
+      "expression": "12222 m → 1222200 cm",
+      "result": 1222200,
+      "timestamp": "2026-03-21T13:21:43.728Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

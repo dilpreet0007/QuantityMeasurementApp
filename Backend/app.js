@@ -1,4 +1,5 @@
-import { getUnits, saveHistory, getHistory, clearHistory as apiClearHistory } from "./api.js";
+// Backend/app.js
+import { getUnits, saveHistory, getHistory, clearHistory } from "./api.js";
 import { performConversion } from "./conversion.js";
 import { compareValues } from "./comparisonUtils.js";
 import { performArithmetic } from "./arithmeticUtils.js";
@@ -95,15 +96,9 @@ async function loadHistory() {
   restoreResult();
 }
 
-async function clearHistory() {
-  await apiClearHistory();
-  await loadHistory();
-}
-
 // ---------------- DROPDOWN ----------------
 function populateDropdown(selectEl, units) {
   if (!selectEl || !units) return;
-
   selectEl.innerHTML = "";
   units.forEach(unit => {
     const option = document.createElement("option");
@@ -111,7 +106,6 @@ function populateDropdown(selectEl, units) {
     option.textContent = `${unit.label} (${unit.symbol})`;
     selectEl.appendChild(option);
   });
-
   if (units.length > 0) selectEl.value = units[0].symbol;
 }
 
@@ -158,10 +152,8 @@ function attachConversionListener() {
       if (state.action === "conversion") {
         const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
         if (result == null) return showErrorBanner("Conversion not available");
-
         if (toInput) toInput.value = result;
         showResult(result, state.toUnit);
-
         await saveHistory({
           type: state.type,
           action: state.action,
@@ -173,14 +165,11 @@ function attachConversionListener() {
 
       if (state.action === "comparison") {
         if (isNaN(secondVal)) return showErrorBanner("Enter second value");
-
         const base = baseUnits[state.type];
         const v1 = await performConversion(fromVal, state.fromUnit, base);
         const v2 = await performConversion(secondVal, state.secondUnit, base);
-
         const result = compareValues(fromVal, state.fromUnit, secondVal, state.secondUnit, v1, v2);
         showResult(result);
-
         await saveHistory({
           type: state.type,
           action: state.action,
@@ -192,11 +181,9 @@ function attachConversionListener() {
 
       if (state.action === "arithmetic") {
         if (isNaN(secondVal)) return showErrorBanner("Enter second value");
-
         const v2 = await performConversion(secondVal, state.secondUnit, state.fromUnit);
         const result = performArithmetic(fromVal, v2, state.operator);
         showResult(result, state.fromUnit);
-
         await saveHistory({
           type: state.type,
           action: state.action,
@@ -207,7 +194,6 @@ function attachConversionListener() {
       }
 
       await loadHistory();
-
     } catch (err) {
       showErrorBanner(err.message);
     }
@@ -217,16 +203,14 @@ function attachConversionListener() {
 // ---------------- UI ----------------
 function toggleUI() {
   toggleOperators(state.action === "arithmetic");
-
   const secondValEl = document.querySelector(".second-value");
   const toGroupEl = document.querySelector(".to-group");
   if (secondValEl) secondValEl.style.display = state.action !== "conversion" ? "block" : "none";
   if (toGroupEl) toGroupEl.style.display = state.action === "conversion" ? "block" : "none";
-
   restoreResult();
 }
 
-// ---------------- TYPE CARD HANDLING (UC-JS-15) ----------------
+// ---------------- TYPE CARD (UC-JS-15) ----------------
 function attachTypeCardListeners() {
   const typeCards = document.querySelectorAll(".card-grid .card");
   const fromInput = document.querySelector("#from-value");
@@ -261,33 +245,37 @@ function attachTypeCardListeners() {
   });
 }
 
+// ---------------- ACTION TAB (UC-JS-16) ----------------
+function attachActionTabListeners() {
+  const actionTabs = document.querySelectorAll(".tabs .btn");
+  actionTabs.forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.action = btn.textContent.trim().toLowerCase();
+      setActive(btn.parentElement, btn, ".btn");
+      toggleOperators(state.action === "arithmetic");
+      showResult(0, "");
+      toggleUI();
+    });
+  });
+}
+
 // ---------------- EVENTS ----------------
 function attachEventListeners() {
-  const actionContainer = document.querySelector(".tabs");
+  attachConversionListener();
+  attachTypeCardListeners();
+  attachActionTabListeners();
+
   const fromSelect = document.querySelector("#from-unit");
   const toSelect = document.querySelector("#to-unit");
   const secondSelect = document.querySelector("#second-unit");
   const operatorDropdown = document.querySelector(".operator-dropdown");
   const clearBtn = document.querySelector("#clear-history");
 
-  if (actionContainer) {
-    actionContainer.querySelectorAll(".btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        setActive(actionContainer, btn, ".btn");
-        state.action = btn.textContent.toLowerCase().trim();
-        toggleUI();
-      });
-    });
-  }
-
   if (fromSelect) fromSelect.addEventListener("change", e => state.fromUnit = e.target.value);
   if (toSelect) toSelect.addEventListener("change", e => state.toUnit = e.target.value);
   if (secondSelect) secondSelect.addEventListener("change", e => state.secondUnit = e.target.value);
   if (operatorDropdown) operatorDropdown.addEventListener("change", e => state.operator = e.target.value);
   if (clearBtn) clearBtn.addEventListener("click", clearHistory);
-
-  attachConversionListener();
-  attachTypeCardListeners();
 }
 
 // ---------------- INIT ----------------
