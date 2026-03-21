@@ -1169,6 +1169,22 @@
       "expression": "211 m → 21100 cm",
       "result": 21100,
       "timestamp": "2026-03-21T13:11:48.789Z"
+    },
+    {
+      "id": "9b68",
+      "type": "length",
+      "action": "comparison",
+      "expression": "122 m is LESS than 221 m",
+      "result": null,
+      "timestamp": "2026-03-21T13:15:25.777Z"
+    },
+    {
+      "id": "29e4",
+      "type": "length",
+      "action": "comparison",
+      "expression": "122 m is LESS than 222221112 cm",
+      "result": null,
+      "timestamp": "2026-03-21T13:15:53.220Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

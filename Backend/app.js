@@ -14,7 +14,7 @@ const state = {
   operator: "+"
 };
 
-// ✅ GLOBAL RESULT LOCK
+// ---------------- GLOBAL RESULT ----------------
 let lastResult = "No result yet";
 
 // ---------------- BASE UNITS ----------------
@@ -72,7 +72,7 @@ function showErrorBanner(msg) {
 
 // ---------------- HISTORY ----------------
 function renderHistory(records) {
-  const list = document.querySelector("#history-list"); // must match HTML
+  const list = document.querySelector("#history-list");
   if (!list) return;
 
   list.innerHTML = "";
@@ -100,6 +100,21 @@ async function clearHistory() {
   await loadHistory();
 }
 
+// ---------------- DROPDOWN ----------------
+function populateDropdown(selectEl, units) {
+  if (!selectEl || !units) return;
+
+  selectEl.innerHTML = "";
+  units.forEach(unit => {
+    const option = document.createElement("option");
+    option.value = unit.symbol;
+    option.textContent = `${unit.label} (${unit.symbol})`;
+    selectEl.appendChild(option);
+  });
+
+  if (units.length > 0) selectEl.value = units[0].symbol;
+}
+
 // ---------------- UNITS ----------------
 async function loadUnits(type) {
   let units = await getUnits(type);
@@ -114,29 +129,16 @@ async function loadUnits(type) {
   const toSelect = document.querySelector("#to-unit");
   const secondSelect = document.querySelector("#second-unit");
 
-  [fromSelect, toSelect, secondSelect].forEach(select => {
-    if (!select) return;
-    select.innerHTML = "";
-    units.forEach(unit => {
-      const option = document.createElement("option");
-      option.value = unit.symbol;
-      option.textContent = `${unit.label} (${unit.symbol})`;
-      select.appendChild(option);
-    });
-  });
+  populateDropdown(fromSelect, units);
+  populateDropdown(toSelect, units);
+  populateDropdown(secondSelect, units);
 
   state.fromUnit = units[0].symbol;
   state.toUnit = units[1]?.symbol || units[0].symbol;
   state.secondUnit = units[0].symbol;
-
-  if (fromSelect) fromSelect.value = state.fromUnit;
-  if (toSelect) toSelect.value = state.toUnit;
-  if (secondSelect) secondSelect.value = state.secondUnit;
-
-  restoreResult();
 }
 
-// ---------------- CALCULATE ----------------
+// ---------------- CALCULATION ----------------
 function attachConversionListener() {
   const btn = document.querySelector(".btn-reset");
   if (!btn) return;
@@ -150,53 +152,47 @@ function attachConversionListener() {
     const secondVal = parseFloat(secondInput?.value);
 
     if (isNaN(fromVal)) return showErrorBanner("Enter valid value");
-
     state.fromVal = fromVal;
 
-    if (state.action === "conversion") {
-      const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
-      if (result == null) return showErrorBanner("Conversion not available");
+    try {
+      if (state.action === "conversion") {
+        const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
+        if (result == null) return showErrorBanner("Conversion not available");
 
-      if (toInput) toInput.value = result;
-      showResult(result, state.toUnit);
+        if (toInput) toInput.value = result;
+        showResult(result, state.toUnit);
 
-      await saveHistory({
-        type: state.type,
-        action: state.action,
-        expression: `${fromVal} ${state.fromUnit} → ${result} ${state.toUnit}`,
-        result,
-        timestamp: new Date().toISOString()
-      });
+        await saveHistory({
+          type: state.type,
+          action: state.action,
+          expression: `${fromVal} ${state.fromUnit} → ${result} ${state.toUnit}`,
+          result,
+          timestamp: new Date().toISOString()
+        });
+      }
 
-      await loadHistory();
-    }
+      if (state.action === "comparison") {
+        if (isNaN(secondVal)) return showErrorBanner("Enter second value");
 
-    if (state.action === "comparison") {
-      if (isNaN(secondVal)) return showErrorBanner("Enter second value");
+        const base = baseUnits[state.type];
+        const v1 = await performConversion(fromVal, state.fromUnit, base);
+        const v2 = await performConversion(secondVal, state.secondUnit, base);
 
-      const base = baseUnits[state.type];
-      const v1 = await performConversion(fromVal, state.fromUnit, base);
-      const v2 = await performConversion(secondVal, state.secondUnit, base);
+        const result = compareValues(fromVal, state.fromUnit, secondVal, state.secondUnit, v1, v2);
+        showResult(result);
 
-      const result = compareValues(fromVal, state.fromUnit, secondVal, state.secondUnit, v1, v2);
+        await saveHistory({
+          type: state.type,
+          action: state.action,
+          expression: result,
+          result: null,
+          timestamp: new Date().toISOString()
+        });
+      }
 
-      showResult(result);
+      if (state.action === "arithmetic") {
+        if (isNaN(secondVal)) return showErrorBanner("Enter second value");
 
-      await saveHistory({
-        type: state.type,
-        action: state.action,
-        expression: result,
-        result: null,
-        timestamp: new Date().toISOString()
-      });
-
-      await loadHistory();
-    }
-
-    if (state.action === "arithmetic") {
-      if (isNaN(secondVal)) return showErrorBanner("Enter second value");
-
-      try {
         const v2 = await performConversion(secondVal, state.secondUnit, state.fromUnit);
         const result = performArithmetic(fromVal, v2, state.operator);
         showResult(result, state.fromUnit);
@@ -208,11 +204,12 @@ function attachConversionListener() {
           result,
           timestamp: new Date().toISOString()
         });
-
-        await loadHistory();
-      } catch (err) {
-        showErrorBanner(err.message);
       }
+
+      await loadHistory();
+
+    } catch (err) {
+      showErrorBanner(err.message);
     }
   });
 }
@@ -229,20 +226,49 @@ function toggleUI() {
   restoreResult();
 }
 
+// ---------------- TYPE CARD HANDLING (UC-JS-15) ----------------
+function attachTypeCardListeners() {
+  const typeCards = document.querySelectorAll(".card-grid .card");
+  const fromInput = document.querySelector("#from-value");
+  const toInput = document.querySelector("#to-value");
+  const fromSelect = document.querySelector("#from-unit");
+  const toSelect = document.querySelector("#to-unit");
+
+  typeCards.forEach(card => {
+    card.addEventListener("click", async () => {
+      const newType = card.textContent.trim().toLowerCase();
+      state.type = newType;
+      setActive(card.parentElement, card, ".card");
+
+      if (fromInput) fromInput.value = "";
+      if (toInput) toInput.value = "";
+      showResult(0, "");
+
+      try {
+        const units = await getUnits(state.type);
+        if (!units || units.length === 0) {
+          showErrorBanner("No units found for selected type");
+          return;
+        }
+        populateDropdown(fromSelect, units);
+        populateDropdown(toSelect, units);
+        state.fromUnit = units[0].symbol;
+        state.toUnit = units[1]?.symbol || units[0].symbol;
+      } catch (err) {
+        showErrorBanner("Failed to load units: " + err.message);
+      }
+    });
+  });
+}
+
 // ---------------- EVENTS ----------------
 function attachEventListeners() {
-  const typeContainer = document.querySelector(".card-grid");
   const actionContainer = document.querySelector(".tabs");
-
-  if (typeContainer) {
-    typeContainer.querySelectorAll(".card").forEach(card => {
-      card.addEventListener("click", async () => {
-        setActive(typeContainer, card, ".card");
-        state.type = card.textContent.trim().toLowerCase();
-        await loadUnits(state.type);
-      });
-    });
-  }
+  const fromSelect = document.querySelector("#from-unit");
+  const toSelect = document.querySelector("#to-unit");
+  const secondSelect = document.querySelector("#second-unit");
+  const operatorDropdown = document.querySelector(".operator-dropdown");
+  const clearBtn = document.querySelector("#clear-history");
 
   if (actionContainer) {
     actionContainer.querySelectorAll(".btn").forEach(btn => {
@@ -254,12 +280,6 @@ function attachEventListeners() {
     });
   }
 
-  const fromSelect = document.querySelector("#from-unit");
-  const toSelect = document.querySelector("#to-unit");
-  const secondSelect = document.querySelector("#second-unit");
-  const operatorDropdown = document.querySelector(".operator-dropdown");
-  const clearBtn = document.querySelector("#clear-history");
-
   if (fromSelect) fromSelect.addEventListener("change", e => state.fromUnit = e.target.value);
   if (toSelect) toSelect.addEventListener("change", e => state.toUnit = e.target.value);
   if (secondSelect) secondSelect.addEventListener("change", e => state.secondUnit = e.target.value);
@@ -267,6 +287,7 @@ function attachEventListeners() {
   if (clearBtn) clearBtn.addEventListener("click", clearHistory);
 
   attachConversionListener();
+  attachTypeCardListeners();
 }
 
 // ---------------- INIT ----------------
