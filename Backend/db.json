@@ -977,6 +977,78 @@
       "expression": "100 m is LESS than 200 m",
       "result": null,
       "timestamp": "2026-03-21T10:12:29.341Z"
+    },
+    {
+      "id": "6ced",
+      "type": "length",
+      "action": "conversion",
+      "expression": "100 m → 10000 cm",
+      "result": 10000,
+      "timestamp": "2026-03-21T10:18:10.571Z"
+    },
+    {
+      "id": "af8f",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1001 m → 100100 cm",
+      "result": 100100,
+      "timestamp": "2026-03-21T10:18:53.610Z"
+    },
+    {
+      "id": "c6db",
+      "type": "length",
+      "action": "conversion",
+      "expression": "67 m → 6700 cm",
+      "result": 6700,
+      "timestamp": "2026-03-21T10:20:45.298Z"
+    },
+    {
+      "id": "1682",
+      "type": "length",
+      "action": "conversion",
+      "expression": "12 m → 1200 cm",
+      "result": 1200,
+      "timestamp": "2026-03-21T10:22:48.828Z"
+    },
+    {
+      "id": "8de6",
+      "type": "length",
+      "action": "conversion",
+      "expression": "788 m → 78800 cm",
+      "result": 78800,
+      "timestamp": "2026-03-21T10:24:41.286Z"
+    },
+    {
+      "id": "5b7e",
+      "type": "length",
+      "action": "conversion",
+      "expression": "766 m → 76600 cm",
+      "result": 76600,
+      "timestamp": "2026-03-21T10:26:29.031Z"
+    },
+    {
+      "id": "5454",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1000 m → 1000 cm",
+      "result": 1000,
+      "timestamp": "2026-03-21T10:30:44.113Z"
+    },
+    {
+      "id": "75a1",
+      "type": "length",
+      "action": "conversion",
+      "expression": "112 m → 11200 cm",
+      "result": 11200,
+      "timestamp": "2026-03-21T10:31:13.360Z"
+    },
+    {
+      "id": "ffb2",
+      "type": "length",
+      "action": "arithmetic",
+      "expression": "1000 m + 567 m",
+      "result": 1567,
+      "timestamp": "2026-03-21T10:31:25.167Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

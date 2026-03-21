@@ -342,3 +342,16 @@ input:focus {
 .input-group {
   margin-bottom: 16px;
 }
+
+.highlight {
+  animation: flash 0.4s ease-in-out;
+}
+
+@keyframes flash {
+  0% {
+    background: #d1fae5;
+  }
+  100% {
+    background: transparent;
+  }
+}
