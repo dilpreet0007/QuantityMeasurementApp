@@ -49,13 +49,7 @@
         <label>From</label>
         <div class="input-row">
           <input type="number" id="from-value" placeholder="Enter value" />
-          <div class="dropdown">
-            <div class="dropdown-head">
-              <span>Select Unit</span>
-              <span>▼</span>
-            </div>
-            <div class="dropdown-list"></div>
-          </div>
+          <select id="from-unit"></select>
         </div>
       </div>
 
@@ -64,28 +58,16 @@
         <label>To</label>
         <div class="input-row">
           <input type="text" id="to-value" placeholder="Result" readonly />
-          <div class="dropdown">
-            <div class="dropdown-head">
-              <span>Select Unit</span>
-              <span>▼</span>
-            </div>
-            <div class="dropdown-list"></div>
-          </div>
+          <select id="to-unit"></select>
         </div>
       </div>
 
-      <!-- SECOND VALUE (Comparison + Arithmetic) -->
+      <!-- SECOND VALUE -->
       <div class="input-group second-value" style="display:none;">
         <label>Second Value</label>
         <div class="input-row">
           <input type="number" id="second-value" placeholder="Enter second value" />
-          <div class="dropdown">
-            <div class="dropdown-head">
-              <span>Select Unit</span>
-              <span>▼</span>
-            </div>
-            <div class="dropdown-list"></div>
-          </div>
+          <select id="second-unit"></select>
         </div>
       </div>
 

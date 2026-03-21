@@ -64,8 +64,8 @@ section {
   border-radius: 10px;
   background: #f1f5f9;
   cursor: pointer;
-  transition: all 0.2s ease;
   border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
 }
 
 .card:hover {
@@ -92,8 +92,8 @@ section {
   border-radius: 8px;
   background: #e5e7eb;
   cursor: pointer;
-  transition: all 0.2s;
   font-weight: 500;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn:hover {
@@ -131,12 +131,13 @@ input {
   border: 1px solid var(--border);
   border-radius: 8px;
   margin-bottom: 8px;
-  transition: border 0.2s;
+  transition: all 0.2s;
 }
 
 input:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(68, 102, 255, 0.1);
 }
 
 /* DROPDOWN */
@@ -152,13 +153,14 @@ input:focus {
   border-radius: 8px;
   background: white;
   cursor: pointer;
-  transition: border 0.2s;
+  transition: all 0.2s;
 }
 
 .dropdown-head:hover {
   border-color: var(--primary);
 }
 
+/* FIXED DROPDOWN CONTROL */
 .dropdown-list {
   display: none;
   position: absolute;
@@ -169,18 +171,20 @@ input:focus {
   border-radius: 8px;
   box-shadow: var(--shadow);
   z-index: 100;
-  max-height: 180px;
+  max-height: 200px;
   overflow-y: auto;
 }
 
-.dropdown:hover .dropdown-list {
+/* JS CONTROLLED OPEN */
+.dropdown.open .dropdown-list {
   display: block;
 }
 
+/* OPTIONS */
 .option {
   padding: 10px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease-in-out;
 }
 
 .option:hover {
@@ -188,8 +192,8 @@ input:focus {
 }
 
 .option.active {
-  background: var(--mint);
-  color: var(--accent);
+  background: var(--primary);
+  color: white;
   font-weight: 500;
 }
 
@@ -216,7 +220,7 @@ input:focus {
   border-radius: 10px;
   font-size: 15px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-reset:hover {
@@ -233,7 +237,8 @@ input:focus {
   border: 1px solid #67e8f9;
   border-radius: 8px;
   color: #0e7490;
-  font-weight: 500;
+  font-weight: 600;
+  min-height: 40px;
 }
 
 /* HISTORY */
@@ -253,6 +258,12 @@ input:focus {
   border-bottom: 1px solid #eee;
 }
 
+/* ERROR BANNER */
+#error-banner {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .flex {
@@ -262,4 +273,72 @@ input:focus {
   .tabs {
     flex-direction: column;
   }
+}
+/* ===== CLEAN PROFESSIONAL DROPDOWN ===== */
+
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* INPUT */
+.input-row input {
+  flex: 1;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.input-row input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* SELECT */
+.input-row select {
+  flex: 1;
+  padding: 11px 34px 11px 12px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  background-color: #fff;
+  color: var(--text);
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  appearance: none;
+
+  /* simple arrow */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%236b7280' height='16' viewBox='0 0 20 20' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M6 8l4 4 4-4'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* HOVER */
+.input-row select:hover {
+  border-color: var(--primary);
+}
+
+/* FOCUS */
+.input-row select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(68, 102, 255, 0.15);
+}
+
+/* DISABLED */
+.input-row select:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+/* ALIGNMENT FIX */
+.input-group {
+  margin-bottom: 16px;
 }
