@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quantity Measurement</title>
-
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="/Frontend/css/style.css"/>
 </head>
 
@@ -43,8 +40,6 @@
 
     <!-- INPUT PANEL -->
     <section class="card-section input-panel">
-
-      <!-- FROM -->
       <div class="input-group">
         <label>From</label>
         <div class="input-row">
@@ -53,7 +48,6 @@
         </div>
       </div>
 
-      <!-- TO -->
       <div class="input-group to-group">
         <label>To</label>
         <div class="input-row">
@@ -62,7 +56,6 @@
         </div>
       </div>
 
-      <!-- SECOND VALUE -->
       <div class="input-group second-value" style="display:none;">
         <label>Second Value</label>
         <div class="input-row">
@@ -71,7 +64,6 @@
         </div>
       </div>
 
-      <!-- OPERATOR -->
       <div id="operator-selector" class="operator-row" style="display:none;">
         <label>Operator</label>
         <select class="operator-dropdown">
@@ -82,28 +74,24 @@
         </select>
       </div>
 
-      <!-- ACTION BUTTON -->
       <button class="btn-reset">Calculate</button>
-
     </section>
 
     <!-- RESULT -->
     <section class="card-section result-panel">
       <h2>Result</h2>
-      <div id="comparison-result" class="result-box">
-        No result yet
-      </div>
+      <div id="comparison-result" class="result-box">No result yet</div>
     </section>
 
     <!-- HISTORY -->
     <section class="card-section">
       <div class="history-header">
         <h2>History</h2>
-        <button id="clear-history">Clear</button>
+        <button id="clear-history" class="clear-btn">Clear</button>
       </div>
-      <div id="history" class="history-box">
-        No history yet
-      </div>
+      <ul id="history-list" class="history-box">
+        <!-- History will render here -->
+      </ul>
     </section>
 
   </div>

@@ -1057,6 +1057,118 @@
       "expression": "122 m + 122 m",
       "result": 244,
       "timestamp": "2026-03-21T10:39:53.129Z"
+    },
+    {
+      "id": "2e49",
+      "type": "length",
+      "action": "conversion",
+      "expression": "101 m → 10100 cm",
+      "result": 10100,
+      "timestamp": "2026-03-21T12:44:55.082Z"
+    },
+    {
+      "id": "8297",
+      "type": "length",
+      "action": "conversion",
+      "expression": "101 m → 10100 cm",
+      "result": 10100,
+      "timestamp": "2026-03-21T12:46:32.559Z"
+    },
+    {
+      "id": "d3f5",
+      "type": "length",
+      "action": "conversion",
+      "expression": "101 m → 10100 cm",
+      "result": 10100,
+      "timestamp": "2026-03-21T12:51:36.794Z"
+    },
+    {
+      "id": "50e3",
+      "type": "length",
+      "action": "conversion",
+      "expression": "101 m → 10100 cm",
+      "result": 10100,
+      "timestamp": "2026-03-21T12:52:05.075Z"
+    },
+    {
+      "id": "4260",
+      "type": "length",
+      "action": "conversion",
+      "expression": "111 m → 11100 cm",
+      "result": 11100,
+      "timestamp": "2026-03-21T12:53:21.322Z"
+    },
+    {
+      "id": "35b5",
+      "type": "length",
+      "action": "conversion",
+      "expression": "1122 m → 112200 cm",
+      "result": 112200,
+      "timestamp": "2026-03-21T12:56:53.212Z"
+    },
+    {
+      "id": "4f79",
+      "type": "length",
+      "action": "conversion",
+      "expression": "111 m → 11100 cm",
+      "result": 11100,
+      "timestamp": "2026-03-21T12:58:34.774Z"
+    },
+    {
+      "id": "7653",
+      "type": "length",
+      "action": "arithmetic",
+      "expression": "11 m + 11 m",
+      "result": 22,
+      "timestamp": "2026-03-21T12:58:49.157Z"
+    },
+    {
+      "id": "0727",
+      "type": "length",
+      "action": "conversion",
+      "expression": "111 m → 11100 cm",
+      "result": 11100,
+      "timestamp": "2026-03-21T13:03:34.894Z"
+    },
+    {
+      "id": "f116",
+      "type": "length",
+      "action": "conversion",
+      "expression": "12 m → 1200 cm",
+      "result": 1200,
+      "timestamp": "2026-03-21T13:03:40.984Z"
+    },
+    {
+      "id": "43c1",
+      "type": "length",
+      "action": "conversion",
+      "expression": "11 m → 1100 cm",
+      "result": 1100,
+      "timestamp": "2026-03-21T13:06:24.887Z"
+    },
+    {
+      "id": "eec9",
+      "type": "length",
+      "action": "conversion",
+      "expression": "222 m → 22200 cm",
+      "result": 22200,
+      "timestamp": "2026-03-21T13:09:17.917Z"
+    },
+    {
+      "id": "536b",
+      "type": "length",
+      "action": "conversion",
+      "expression": "122 m → 12200 cm",
+      "result": 12200,
+      "timestamp": "2026-03-21T13:11:43.889Z"
+    },
+    {
+      "id": "003c",
+      "type": "length",
+      "action": "conversion",
+      "expression": "211 m → 21100 cm",
+      "result": 21100,
+      "timestamp": "2026-03-21T13:11:48.789Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

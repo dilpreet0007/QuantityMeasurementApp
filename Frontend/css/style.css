@@ -210,7 +210,7 @@ input:focus {
 }
 
 /* BUTTON */
-.btn-reset {
+.btn-reset,.clear-btn{
   width: 100%;
   margin-top: 20px;
   padding: 12px;
