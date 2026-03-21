@@ -1049,6 +1049,14 @@
       "expression": "1000 m + 567 m",
       "result": 1567,
       "timestamp": "2026-03-21T10:31:25.167Z"
+    },
+    {
+      "id": "b624",
+      "type": "length",
+      "action": "arithmetic",
+      "expression": "122 m + 122 m",
+      "result": 244,
+      "timestamp": "2026-03-21T10:39:53.129Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

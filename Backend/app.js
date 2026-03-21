@@ -28,11 +28,7 @@ const baseUnits = {
 // ---------------- UC-JS-11 ----------------
 function setActive(parentEl, clickedEl, childSelector) {
   if (!parentEl) return;
-
-  parentEl
-    .querySelectorAll(childSelector)
-    .forEach(el => el.classList.remove("active"));
-
+  parentEl.querySelectorAll(childSelector).forEach(el => el.classList.remove("active"));
   clickedEl.classList.add("active");
 }
 
@@ -55,9 +51,17 @@ function showResult(value, unitSymbol = "") {
 // ✅ RESTORE RESULT EVERY TIME UI UPDATES
 function restoreResult() {
   const resultBox = document.querySelector("#comparison-result");
-  if (resultBox) {
-    resultBox.textContent = lastResult;
+  if (resultBox) resultBox.textContent = lastResult;
+}
+
+// ---------------- UC-JS-13 ----------------
+function toggleOperators(show) {
+  const operatorRow = document.querySelector(".operator-row");
+  if (!operatorRow) {
+    console.warn("Operator row element not found");
+    return;
   }
+  operatorRow.style.display = show ? "flex" : "none";
 }
 
 // ---------------- HISTORY ----------------
@@ -74,9 +78,7 @@ async function loadHistory() {
   } else {
     items.forEach(e => {
       const div = document.createElement("div");
-      div.textContent = `${e.expression} ${
-        e.result !== null ? "= " + e.result : ""
-      }`;
+      div.textContent = `${e.expression} ${e.result !== null ? "= " + e.result : ""}`;
       container.appendChild(div);
     });
   }
@@ -87,7 +89,6 @@ async function loadHistory() {
 // ---------------- LOAD UNITS ----------------
 async function loadUnits(type) {
   let units = await getUnits(type);
-
   units = units.filter(u => u.type === type);
 
   if (!units.length) {
@@ -101,9 +102,7 @@ async function loadUnits(type) {
 
   [fromSelect, toSelect, secondSelect].forEach(select => {
     if (!select) return;
-
     select.innerHTML = "";
-
     units.forEach(unit => {
       const option = document.createElement("option");
       option.value = unit.symbol;
@@ -129,9 +128,7 @@ function attachConversionListener() {
 
   btn.addEventListener("click", async () => {
     const fromVal = parseFloat(document.querySelector("#from-value").value);
-    const secondVal = parseFloat(
-      document.querySelector("#second-value")?.value
-    );
+    const secondVal = parseFloat(document.querySelector("#second-value")?.value);
 
     if (isNaN(fromVal)) {
       showErrorBanner("Enter valid value");
@@ -142,11 +139,7 @@ function attachConversionListener() {
 
     // ---------- CONVERSION ----------
     if (state.action === "conversion") {
-      const result = await performConversion(
-        fromVal,
-        state.fromUnit,
-        state.toUnit
-      );
+      const result = await performConversion(fromVal, state.fromUnit, state.toUnit);
 
       if (result == null) {
         showErrorBanner("Conversion not available");
@@ -177,20 +170,9 @@ function attachConversionListener() {
       const base = baseUnits[state.type];
 
       const v1 = await performConversion(fromVal, state.fromUnit, base);
-      const v2 = await performConversion(
-        secondVal,
-        state.secondUnit,
-        base
-      );
+      const v2 = await performConversion(secondVal, state.secondUnit, base);
 
-      const result = compareValues(
-        fromVal,
-        state.fromUnit,
-        secondVal,
-        state.secondUnit,
-        v1,
-        v2
-      );
+      const result = compareValues(fromVal, state.fromUnit, secondVal, state.secondUnit, v1, v2);
 
       showResult(result);
 
@@ -213,17 +195,9 @@ function attachConversionListener() {
       }
 
       try {
-        const v2 = await performConversion(
-          secondVal,
-          state.secondUnit,
-          state.fromUnit
-        );
+        const v2 = await performConversion(secondVal, state.secondUnit, state.fromUnit);
 
-        const result = performArithmetic(
-          fromVal,
-          v2,
-          state.operator
-        );
+        const result = performArithmetic(fromVal, v2, state.operator);
 
         showResult(result, state.fromUnit);
 
@@ -262,8 +236,7 @@ function showErrorBanner(msg) {
 
 // ---------------- UI TOGGLE ----------------
 function toggleUI() {
-  document.querySelector(".operator-row").style.display =
-    state.action === "arithmetic" ? "flex" : "none";
+  toggleOperators(state.action === "arithmetic"); // ✅ UC-JS-13
 
   document.querySelector(".second-value").style.display =
     state.action !== "conversion" ? "block" : "none";
@@ -313,11 +286,9 @@ function attachEventListeners() {
   });
 
   // OPERATOR
-  document
-    .querySelector(".operator-dropdown")
-    ?.addEventListener("change", e => {
-      state.operator = e.target.value;
-    });
+  document.querySelector(".operator-dropdown")?.addEventListener("change", e => {
+    state.operator = e.target.value;
+  });
 
   attachConversionListener();
 }
