@@ -1,5 +1,5 @@
 // Backend/app.js
-import { getUnits, saveHistory, getHistory, clearHistory } from "./api.js";
+import { getUnits, saveHistory, getHistory, clearHistory as apiClearHistory } from "./api.js";
 import { performConversion } from "./conversion.js";
 import { compareValues } from "./comparisonUtils.js";
 import { performArithmetic } from "./arithmeticUtils.js";
@@ -91,9 +91,13 @@ function renderHistory(records) {
 }
 
 async function loadHistory() {
-  const items = await getHistory();
-  renderHistory(items);
-  restoreResult();
+  try {
+    const items = await getHistory();
+    renderHistory(items);
+    restoreResult();
+  } catch (err) {
+    showErrorBanner("Failed to load history: " + err.message);
+  }
 }
 
 // ---------------- DROPDOWN ----------------
@@ -111,25 +115,29 @@ function populateDropdown(selectEl, units) {
 
 // ---------------- UNITS ----------------
 async function loadUnits(type) {
-  let units = await getUnits(type);
-  units = units.filter(u => u.type === type);
+  try {
+    let units = await getUnits(type);
+    units = units.filter(u => u.type === type);
 
-  if (!units.length) {
-    showErrorBanner("No units found");
-    return;
+    if (!units.length) {
+      showErrorBanner("No units found");
+      return;
+    }
+
+    const fromSelect = document.querySelector("#from-unit");
+    const toSelect = document.querySelector("#to-unit");
+    const secondSelect = document.querySelector("#second-unit");
+
+    populateDropdown(fromSelect, units);
+    populateDropdown(toSelect, units);
+    populateDropdown(secondSelect, units);
+
+    state.fromUnit = units[0].symbol;
+    state.toUnit = units[1]?.symbol || units[0].symbol;
+    state.secondUnit = units[0].symbol;
+  } catch (err) {
+    showErrorBanner("Failed to load units: " + err.message);
   }
-
-  const fromSelect = document.querySelector("#from-unit");
-  const toSelect = document.querySelector("#to-unit");
-  const secondSelect = document.querySelector("#second-unit");
-
-  populateDropdown(fromSelect, units);
-  populateDropdown(toSelect, units);
-  populateDropdown(secondSelect, units);
-
-  state.fromUnit = units[0].symbol;
-  state.toUnit = units[1]?.symbol || units[0].symbol;
-  state.secondUnit = units[0].symbol;
 }
 
 // ---------------- CALCULATION ----------------
@@ -210,7 +218,7 @@ function toggleUI() {
   restoreResult();
 }
 
-// ---------------- TYPE CARD (UC-JS-15) ----------------
+// ---------------- TYPE CARD ----------------
 function attachTypeCardListeners() {
   const typeCards = document.querySelectorAll(".card-grid .card");
   const fromInput = document.querySelector("#from-value");
@@ -228,24 +236,12 @@ function attachTypeCardListeners() {
       if (toInput) toInput.value = "";
       showResult(0, "");
 
-      try {
-        const units = await getUnits(state.type);
-        if (!units || units.length === 0) {
-          showErrorBanner("No units found for selected type");
-          return;
-        }
-        populateDropdown(fromSelect, units);
-        populateDropdown(toSelect, units);
-        state.fromUnit = units[0].symbol;
-        state.toUnit = units[1]?.symbol || units[0].symbol;
-      } catch (err) {
-        showErrorBanner("Failed to load units: " + err.message);
-      }
+      await loadUnits(state.type);
     });
   });
 }
 
-// ---------------- ACTION TAB (UC-JS-16) ----------------
+// ---------------- ACTION TAB ----------------
 function attachActionTabListeners() {
   const actionTabs = document.querySelectorAll(".tabs .btn");
   actionTabs.forEach(btn => {
@@ -275,7 +271,12 @@ function attachEventListeners() {
   if (toSelect) toSelect.addEventListener("change", e => state.toUnit = e.target.value);
   if (secondSelect) secondSelect.addEventListener("change", e => state.secondUnit = e.target.value);
   if (operatorDropdown) operatorDropdown.addEventListener("change", e => state.operator = e.target.value);
-  if (clearBtn) clearBtn.addEventListener("click", clearHistory);
+  if (clearBtn) {
+    clearBtn.addEventListener("click", async () => {
+      await apiClearHistory();
+      await loadHistory();
+    });
+  }
 }
 
 // ---------------- INIT ----------------
