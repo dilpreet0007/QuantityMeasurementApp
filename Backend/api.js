@@ -45,14 +45,27 @@ export async function saveHistory(record) {
 
 // ---------------- UC-JS-06: Load All History Records ----------------
 export async function getHistory() {
-  try {
-    const res = await fetch(`${BASE_URL}/history?_sort=timestamp&_order=desc`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (error) {
-    console.error("Error fetching history:", error);
-    return [];
+  const endpoints = [
+    `${BASE_URL}/history?_sort=timestamp&_order=desc`,
+    `${BASE_URL}/history`
+  ];
+
+  let lastError = null;
+  for (const endpoint of endpoints) {
+    try {
+      const res = await fetch(endpoint);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const records = await res.json();
+      if (!Array.isArray(records)) return [];
+      // Keep ordering stable even if backend ignores sort query params.
+      return records.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    } catch (error) {
+      lastError = error;
+    }
   }
+
+  console.error("Error fetching history:", lastError);
+  throw new Error("Unable to load history from server");
 }
 
 // ---------------- UC-JS-14: Clear History ----------------
