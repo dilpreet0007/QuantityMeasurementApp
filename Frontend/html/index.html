@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quantity Measurement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/Frontend/css/style.css"/>
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <h1>📏 Quantity Measurement</h1>
+      <p class="subtitle">Convert, Compare & Calculate Units Easily</p>
+    </header>
+
+    <!-- TYPE SELECTION -->
+    <section class="card-section">
+      <h2>Select Type</h2>
+      <div class="card-grid">
+        <div class="card active"><span>Length</span></div>
+        <div class="card"><span>Weight</span></div>
+        <div class="card"><span>Temperature</span></div>
+        <div class="card"><span>Volume</span></div>
+      </div>
+    </section>
+
+    <!-- ACTION TABS -->
+    <section class="card-section">
+      <h2>Select Action</h2>
+      <div class="tabs">
+        <button class="btn active">Conversion</button>
+        <button class="btn">Comparison</button>
+        <button class="btn">Arithmetic</button>
+      </div>
+    </section>
+
+    <!-- INPUT PANEL -->
+    <section class="card-section input-panel">
+      <div class="input-group">
+        <label>From</label>
+        <div class="input-row">
+          <input type="number" id="from-value" placeholder="Enter value" />
+          <select id="from-unit"></select>
+        </div>
+      </div>
+
+      <div class="input-group to-group">
+        <label>To</label>
+        <div class="input-row">
+          <input type="text" id="to-value" placeholder="Result" readonly />
+          <select id="to-unit"></select>
+        </div>
+      </div>
+
+      <div class="input-group second-value" style="display:none;">
+        <label>Second Value</label>
+        <div class="input-row">
+          <input type="number" id="second-value" placeholder="Enter second value" />
+          <select id="second-unit"></select>
+        </div>
+      </div>
+
+      <div id="operator-selector" class="operator-row" style="display:none;">
+        <label>Operator</label>
+        <select class="operator-dropdown">
+          <option value="+">Addition (+)</option>
+          <option value="-">Subtraction (-)</option>
+          <option value="*">Multiplication (×)</option>
+          <option value="/">Division (÷)</option>
+        </select>
+      </div>
+
+      <button class="btn-reset">Calculate</button>
+    </section>
+
+    <!-- RESULT -->
+    <section class="card-section result-panel">
+      <h2>Result</h2>
+      <div id="comparison-result" class="result-box">No result yet</div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="card-section">
+      <div class="history-header">
+        <h2>History</h2>
+        <button id="clear-history" class="clear-btn">Clear</button>
+      </div>
+      <ul id="history-list" class="history-box">
+        <!-- History will render here -->
+      </ul>
+    </section>
+
+  </div>
+
+  <script type="module" src="/Backend/app.js"></script>
+</body>
+</html>
